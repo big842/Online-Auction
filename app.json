@@ -1,0 +1,19 @@
+{
+  "name": "Online-Auction",
+  "description": "online auction",
+  "scripts": {
+    "postdeploy": "bin/setup",
+    "pr-predestroy": "bean/teardown"
+  },
+  "env": {
+    "store": "1234567890"
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
