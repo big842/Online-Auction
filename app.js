@@ -1,5 +1,3 @@
-'use strict'
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
@@ -8,7 +6,7 @@ var app = express();
 var mysql = require('mysql');
 var moment = require('moment');
 var fs = require('fs');
-var port = 3000;
+app.set('port', (process.env.PORT || 3000));
 var ip = '127.0.0.1';
 
 var connection = mysql.createConnection({
@@ -19,12 +17,23 @@ var connection = mysql.createConnection({
     database: 'online_auction'
 });
 
+app.use(express.static(__dirname + '/public'));
+
+// views is directory for all template files
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+
+app.get('/', function(request, response) {
+  response.render('index');
+});
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(bodyParser.json());
 app.use(cors());
+
 
 function isExpireDay(end_date){
     var a = new Date(end_date);
@@ -1107,7 +1116,6 @@ app.delete('/users/deleteUser/:user_id', function(req, res) {
     });
 });
 
-
-app.listen(port, ip, function() {
-    console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), ip, port);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });

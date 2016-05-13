@@ -1,5 +1,5 @@
 {
-  "name": "online-auction",
+  "name": "online_auction",
   "description": "A barebones Node.js app using Express 4",
   "repository": "https://github.com/big842/Online-Auction",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
