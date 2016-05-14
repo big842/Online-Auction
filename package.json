@@ -1,20 +1,21 @@
 {
-  "name": "online_auction",
-  "version": "1.0.0",
+  "name": "node-js-getting-started",
+  "version": "0.2.5",
   "description": "A sample Node.js app using Express 4",
   "engines": {
-    "node": "4.4.2"
+    "node": "5.9.1"
   },
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "express": "4.13.4"
+    "ejs": "2.4.1",
+    "express": "4.13.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/big842/Online-Auction"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
     "node",
