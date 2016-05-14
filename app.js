@@ -6,7 +6,7 @@ var app = express();
 var mysql = require('mysql');
 var moment = require('moment');
 var fs = require('fs');
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 5000));
 var ip = '127.0.0.1';
 
 var connection = mysql.createConnection({
@@ -33,7 +33,6 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(cors());
-
 
 function isExpireDay(end_date){
     var a = new Date(end_date);
