@@ -73,10 +73,10 @@
 		          	<form class="navbar-form navbar-right" ng-hide = "hideUsername" >
 
 		          		<div class="btn-group">
-			          		<a href="" ng-model = "username" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff;" >
-					    			<h4>Hi! &nbsp;{{username}}</h4>
+			          		<a href="" ng-model = "username" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    			<h4 id = "usernameStyle">Hi! &nbsp;{{username}}</h4>
 				    		</a>
-				    		<div class="dropdown-menu" style="padding-right: 8px; padding-left: 8px; margin-top: 10px;">
+				    		<div class="dropdown-menu" style="padding-right: 8px; padding-left: 8px;">
 				    			<ul class="list-group">
 				    				<li class="list-group-item text-center col-lg-12"><a  href="#profile">Profile</a></li>
 				    				<li class="list-group-item col-lg-12" ng-hide="hideAdminUser"><a  href="#manager"  type="submit" class="col-lg-12 btn btn-warning block-center " >Management</a></li>
@@ -99,7 +99,7 @@
 						    	<input ng-model="password" type="password" placeholder="Password" class="form-control" style="margin-top: 7px;">
 							    <center><div class="input-group text-center" style="margin-top: 10px;">
 							        <input ng-model="rememberPass" type="checkbox" aria-label="...">
-							        Remember Password
+							        Keep Sign In
 							    </div></center>
 						    	<center style="margin-top: 10px;"><a href="#/forgot_password">Forgot Password</a></center>
 							    <button type="submit" class="btn btn-primary center-block" ng-click = "SignIn()" 
@@ -110,7 +110,7 @@
 		          	</form>
 		 
 		        </div>
-				</div>
+			</div>
 		</nav>
 
 		<!-- Content -->
@@ -131,6 +131,7 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/index_controller.js"></script>
+		<script type="text/javascript" src="js/sessionService.js"></script>
 		<script type="text/javascript" src="js/social_network.js"></script>
 		<script type="text/javascript" src="js/menu_controller.js"></script>
 		<script type="text/javascript" src="js/result_controller.js"></script>

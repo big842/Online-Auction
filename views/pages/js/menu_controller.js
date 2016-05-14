@@ -1,10 +1,29 @@
-app.controller('MenuController',['$scope', '$http', '$rootScope', function($scope, $http, $rootScope)  {
+app.controller('MenuController',['$scope', '$http', '$rootScope','sessionService', function($scope, $http, $rootScope,sessionService)  {
 	$scope.hideUsername = true;
 	$scope.hideRegister = false;
 	$scope.hideAdminUser = true;
 	$scope.hideVipUser = true;
+	$scope.username = '';
 
+    sessionService.setSession();
 	//Show message with the number of product user won
+	$scope.$on("UpdateSignOut", function(){
+       	$scope.hideUsername = true;
+		$scope.hideVipUser = true;
+		$scope.hideRegister = false;
+		$scope.hideAdminUser = true;
+    });
+
+    $scope.$on("UpdateSignIn", function(){
+    	GetUserResult();
+       $scope.hideUsername = false;
+		$scope.hideRegister = true;
+		if(sessionStorage.type_user == "admin")
+			$scope.hideAdminUser = false;
+		else if(sessionStorage.type_user == "user")
+			$scope.hideAdminUser = true;
+    });
+    
 	if(sessionStorage.numCart != null)
 	{
 		if(sessionStorage.numCart == 0){
@@ -19,20 +38,23 @@ app.controller('MenuController',['$scope', '$http', '$rootScope', function($scop
 	}
 
 	var curUsername = localStorage.getItem("username");
-	if(curUsername == null)
+	if(curUsername == null){		
 		curUsername = sessionStorage.username;
+	}
 	else{
-		GetUserResult();
 		sessionStorage.username = curUsername;
 	}
 
 	if(curUsername != null)
 	{
+		GetUserResult();
 		$scope.hideUsername = false;
-		$scope.hideAdminUser = false;
 		$scope.hideRegister = true;
-		$scope.hideVipUser = false;
 		$scope.username = curUsername;
+		if(sessionStorage.type_user == "admin")
+			$scope.hideAdminUser = false;
+		else if(sessionStorage.type_user == "user")
+			$scope.hideAdminUser = true;
 	}
 
 	$scope.SelectCategory = function (newCategory) {
@@ -66,19 +88,28 @@ app.controller('MenuController',['$scope', '$http', '$rootScope', function($scop
 
 	$scope.SignIn = function(){
 		var username = $scope.username;
+		if(username.length == 0 || username == null)
+		{
+			alert("User name must be fill!!");
+			return;
+		}
 		if(username != null || username.length != 0)
 		{
 			$http.get('http://127.0.0.1:3000/user/' + username).then(function(res) {
-				if(res.data != null || res.data.length != 0){
+				if(res.data.length != 0){
 					var data = res.data[0];
 					var password = $scope.password;
-					if (data.password != password){
+					
+					if(data.status == 0){
+						alert("Your account was blocked! Please contact administrator for more detail.");
+					}
+					else if (data.password != password){
 						alert("You inputted wrong password....!");
 					}
 					else{
 						var vipUser = -1;
 						$http.get('http://127.0.0.1:3000/user/checkVip/' + data.user_id).then(function(res3){
-							if(res3.data !=null  || res3.data.length != 0){
+							if(res3.data.length != 0){
 								var data3 = res3.data[0];
 								if(data3 != null){
 									if(data3.user_id == data.user_id)
@@ -128,6 +159,7 @@ app.controller('MenuController',['$scope', '$http', '$rootScope', function($scop
 									alert("Welcome " + username + " to Online Auction!");
 									$scope.hideUsername = false;
 									$scope.hideRegister = true;
+
 									if(vipUser == 1)
 										$scope.hideVipUser = false;
 									else
@@ -174,6 +206,7 @@ app.controller('MenuController',['$scope', '$http', '$rootScope', function($scop
 
 		$scope.signOut = newLink;
 		$rootScope.$emit("LogOut", {});
+		sessionService.deleteCookie();
 	}
 
 	function GetUserResult(){
@@ -198,10 +231,15 @@ app.controller('MenuController',['$scope', '$http', '$rootScope', function($scop
 	   		sessionStorage.numCart = count;
 	   		$scope.numProduct = count;
 		});
+		sessionService.setCookie();
 
 		$rootScope.isLoginForRating = true;
 		$rootScope.isRated = false;
-		var query = 'http://127.0.0.1:3000/rate/' + sessionStorage.curProID + '/' + sessionStorage.user_id;
+
+		var htmlCode = location.href;
+		var temp = htmlCode.split("=");
+		var curProID = temp[1];
+		var query = 'http://127.0.0.1:3000/rate/' + curProID + '/' + sessionStorage.user_id;
 		$http.get(query).then(function(res) {
 			if(res.data.length != 0){
 				var data = res.data[0].ratio;

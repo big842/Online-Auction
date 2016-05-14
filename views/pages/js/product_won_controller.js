@@ -29,7 +29,6 @@ app.controller('ProductWonController', ['$scope', '$http', function($scope, $htt
 		}
 
 		$scope.ShowPayment = true;
-		console.log(productInfo);
 
 		$scope.productID = productInfo.product_id;
 		$scope.productName = productInfo.name;

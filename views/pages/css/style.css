@@ -3,6 +3,11 @@ body{
 	background: #e7e6e6;     
 }
 
+#usernameStyle{
+  color:#fff; 
+  margin: 0px 20px 0px;
+}
+
 #paddingLabel{
 	margin-top: 10px;
 }

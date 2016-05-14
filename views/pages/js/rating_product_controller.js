@@ -12,7 +12,8 @@ app.controller('RatingProductController', ['$scope', '$http', '$sce','$rootScope
 				if(res.data.length != 0){
 					var data = res.data[0].ratio;
 					var star = "star-" + data;
-					document.getElementById(star).checked = true;
+					if(document.getElementById(star) != null)
+						document.getElementById(star).checked = true;
 					$rootScope.isRated = true;
 				}
 			});

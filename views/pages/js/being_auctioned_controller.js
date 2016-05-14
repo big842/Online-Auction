@@ -201,35 +201,18 @@ app.controller('HomeController', ['$scope', '$http', function($scope, $http)  {
 	}
 }]);
 
-app.controller('TimeController', function($scope) {
-	var hh = null;
-	var mm = null;
-	var ss = null;
-	var timeout = null;
+app.controller('TimeController', function($scope, $timeout) {
+	var hh = 0;
+	var mm = 0;
+	var ss = 0;
+	var timeout = 0;
 
 	$scope.RemainingTime = function(end_date){
-		var endDate1 = end_date.split("-"); 
-		var end_date2 = endDate1[2].split("T");
-		var localTime = new Date(end_date).toLocaleTimeString();
-		var date1 = endDate1[0]  + "-" + endDate1[1]  + "-" + end_date2[0]+ "T"+ localTime + ".000Z";
 
-		var today = new Date();
-		var month = Number(today.getMonth() + 1);
-		var minute = today.getMinutes();
-		var day = today.getDate();
-		var hour = today.getHours();
+		var a = new Date(end_date);
+		var c = new Date(Date.now());
+		var total = a - c;
 
-		month =  month < 10 ? '0' + month : '' + month;
-		day = day< 10 ? '0' + day : '' + day;
-		hour = hour < 10 ? '0' + hour : '' + hour;
-		minute = minute < 10 ? '0' + minute : '' + minute;
-
-		var date2 = today.getFullYear() + "-" + month + "-" + day + "T" + 
-			hour + ":" + minute + ":" + "00.000Z";
-
-		var a = new Date(date1);
-		var b = new Date(date2)
-		var total = a - b;
 		total = total/(1000*60*60);
 
 		var hour2 = Math.floor(total);
@@ -254,7 +237,7 @@ app.controller('TimeController', function($scope) {
 
 	$scope.ReverseTime = function()
 	{
-		setTimeout(function(){
+		$timeout(function(){
 			var end_date = sessionStorage.proEndDay;
 			$scope.RemainingTime(end_date);
 			if(hh < 0 || mm < 0){
@@ -262,8 +245,9 @@ app.controller('TimeController', function($scope) {
 		    	document.getElementById('minute').innerText = "00";
 		    	document.getElementById('sencond').innerText = "00";
 			}
-			else
+			else{
 				$scope.StartTime();
+			}
 		}, 1500)
 	}
 
@@ -287,7 +271,7 @@ app.controller('TimeController', function($scope) {
 	    document.getElementById('minute').innerText = mm.toString();
 	    document.getElementById('sencond').innerText = ss.toString();
 	 
-	    timeout = setTimeout(function(){
+	    timeout = $timeout(function(){
 	        ss--;
 	        $scope.StartTime();
 	    }, 1000);

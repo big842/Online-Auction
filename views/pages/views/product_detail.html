@@ -40,12 +40,12 @@
                 </div>                
             </div>
 
-            <div class="row" ng-show="isLoginForRating">
+            <div class="row"  ng-show="isLoginForRating">
                 <div id="yourRate" class="col-xs-5 col-md-5">
                     <h3>Your Rate: </h3>
                 </div>
                 <div class="col-xs-7 col-md-7">
-                    <form id="ratingsForm" ng-controller = "RatingProductController" ng-init="getUserRate(pro_id)">
+                    <form id="ratingsForm"  ng-controller = "RatingProductController" ng-init="getUserRate(pro_id)">
                         <div class="stars">
                             <input type="radio" name="star" class="star-1" id="star-1" ng-disabled="isRated" ng-click="ratingPro(1,pro_id)"/>
                             <label class="star-1" for="star-1">1</label>

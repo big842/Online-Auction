@@ -92,7 +92,7 @@ app.controller('RateController', ['$scope', '$http', '$sce', function($scope, $h
 	}
 }]);
 
-app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', '$timeout', function($scope, $http, $sce, $timeout) {
 	var price;
 	var nowDay;
 
@@ -127,10 +127,10 @@ app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', function($scope, $h
 		//Create page
 		var numPage = new Array();
     	var k = 1;
-    	var t = 10;
+    	var t = 8;
     	while(data.length - t > 0){
     		k++;
-    		t+=10;
+    		t+=8;
     	}
     	for (var i = 1; i <= k; i++) {
     		numPage.push(i);
@@ -152,7 +152,7 @@ app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', function($scope, $h
 	                    '</thead>'+
 	                    '<tbody>';
 
-	    	for (var i = 10*(curTablePage-1); i < 10 * curTablePage; i++) {
+	    	for (var i = 8*(curTablePage-1); i < 8 * curTablePage; i++) {
 		    		if(data[i] != null){ 
 		    			var date1 = data[i].date.split("-"); 
 						var date2 = date1[2].split("T");
@@ -207,7 +207,7 @@ app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', function($scope, $h
 				$scope.tablebid = listbid;
 			});
 
-			setTimeout(function(){
+			$timeout(function(){
 				if(type == 0)
 					GetListBid(0);
 		    }, 1000);
@@ -295,7 +295,7 @@ app.controller("AuctionBidCtrl", ['$scope', '$http', '$sce', function($scope, $h
     }
 }]);
 
-app.controller("ChangeContentCtrl", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+app.controller("ChangeContentCtrl", ['$scope', '$http', '$sce', '$timeout', function($scope, $http, $sce, $timeout) {
 	var activeBtn = 0;
 	var userContent;
 	var nowDay;
@@ -397,7 +397,7 @@ app.controller("ChangeContentCtrl", ['$scope', '$http', '$sce', function($scope,
 					$scope.content = GetComment(data, 0);
 				});
 
-				setTimeout(function(){
+				$timeout(function(){
 					if(!isChange){
 						isChange = false; 
 						$scope.LoadContent(pro_id, 1, 0);
@@ -488,6 +488,7 @@ app.controller("ChangeContentCtrl", ['$scope', '$http', '$sce', function($scope,
 		                }
 		            }).then(function(res) {
 		        });
+
 	    	    $scope.LoadContent(curProID, 1, 1);
 		    }
 		}
